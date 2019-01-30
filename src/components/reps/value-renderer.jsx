@@ -3,8 +3,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Tooltip from "@material-ui/core/Tooltip";
-
 import arrayHandler from "./array-handler";
 import dataFrameHandler from "./dataframe-handler";
 import defaultHandler from "./default-handler";
@@ -113,14 +111,12 @@ export function renderValue(value, inContainer = false, useDefault = false) {
 export class ValueRenderer extends React.Component {
   static propTypes = {
     render: PropTypes.bool.isRequired,
-    valueToRender: PropTypes.any,
     inContainer: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
     this.state = { useDefault: false };
-
     this.toggleDefault = this.toggleDefault.bind(this);
   }
 
@@ -134,37 +130,35 @@ export class ValueRenderer extends React.Component {
     if (!this.props.render) {
       return <div className="empty-resultset" />;
     }
-
     const value = renderValue(
       this.props.valueToRender,
       this.props.inContainer,
       this.state.useDefault
     );
-
-    if (!this.props.inContainer) {
-      let tooltip;
-      let buttonText;
-      if (!this.state.useDefault) {
-        tooltip = "Switch to default representation";
-        buttonText = "{}";
-      } else {
-        tooltip = "Switch to specialized representation";
-        buttonText = "★";
-      }
-      return (
-        <div>
-          <Tooltip classes={{ tooltip: "iodide-tooltip" }} title={tooltip}>
-            <button
-              className="pane-button light-pane-button button-content-centered default-rep-button"
-              onClick={this.toggleDefault}
-            >
-              {buttonText}
-            </button>
-          </Tooltip>
-          {value}
-        </div>
-      );
-    }
+    // if (!this.props.inContainer) {
+    //   let tooltip;
+    //   let buttonText;
+    //   if (!this.state.useDefault) {
+    //     tooltip = "Switch to default representation";
+    //     buttonText = "{}";
+    //   } else {
+    //     tooltip = "Switch to specialized representation";
+    //     buttonText = "★";
+    //   }
+    //   return (
+    //     <div>
+    //       <Tooltip classes={{ tooltip: "iodide-tooltip" }} title={tooltip}>
+    //         <button
+    //           className="pane-button light-pane-button button-content-centered default-rep-button"
+    //           onClick={this.toggleDefault}
+    //         >
+    //           {buttonText}
+    //         </button>
+    //       </Tooltip>
+    //       {value}
+    //     </div>
+    //   );
+    // }
 
     return value;
   }
